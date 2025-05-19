@@ -48,7 +48,6 @@ class BoardTest {
 
     @Test
     void testThrowWhenPlacingOutOfBounds() {
-//        assertThrows(IndexOutOfBoundsException.class, () -> board.placeMove(20, 20, 'O'));
-        assertDoesNotThrow(() -> board.placeMove(20, 20, 'O'));
+        assertThrows(IndexOutOfBoundsException.class, () -> board.placeMove(20, 20, 'O'));
     }
 }
