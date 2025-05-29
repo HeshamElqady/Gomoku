@@ -17,7 +17,12 @@ public class GameLogicTest {
     public void setUp() {
         player1 = new Player("Alice", 'X');
         player2 = new Player("Bob", 'O');
-        gameLogic = new GameLogic(player1, player2, 15);
+        gameLogic = new GameLogic(player1, player2, 15) {
+            @Override
+            public boolean isForbiddenMove(Move move) {
+                return false;
+            }
+        };
     }
 
     @Test

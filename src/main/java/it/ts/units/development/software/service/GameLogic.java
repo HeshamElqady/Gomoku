@@ -4,7 +4,7 @@ import it.ts.units.development.software.model.Board;
 import it.ts.units.development.software.model.Move;
 import it.ts.units.development.software.model.Player;
 
-public class GameLogic {
+public abstract class GameLogic {
     private final Board board;
     private final Player player1;
     private final Player player2;
@@ -60,6 +60,9 @@ public class GameLogic {
             return true;
         }
 
+        if (isForbiddenMove(move)) {
+            gameOver = true;
+        }
         switchTurn();
         return true;
     }
@@ -111,4 +114,5 @@ public class GameLogic {
         }
         return true;
     }
+    public abstract boolean isForbiddenMove(Move move);
 }

@@ -57,4 +57,20 @@ public class ConsoleView {
             System.out.println(Constants.PLAYER_O);
         }
     }
+
+    public void printGameChoice() {
+        System.out.println(Constants.WELCOME_TO_THE_GAME);
+    }
+
+    public void printGomokuWelcomeGame() {
+        System.out.println(Constants.INITIALIZE_GOMOKU_GAME);
+    }
+
+    public void printHelpRenju(){
+        System.out.println(Constants.HELP_RENJU_GOMOKU_GAME);
+    }
+    public void printRenjuGomokuWelcomeGame() {
+        System.out.println(Constants.INITIALIZE_RENJU_GOMOKU_GAME);
+    }
+
 }

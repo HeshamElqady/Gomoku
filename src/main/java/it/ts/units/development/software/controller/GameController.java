@@ -3,6 +3,8 @@ package it.ts.units.development.software.controller;
 import it.ts.units.development.software.model.Move;
 import it.ts.units.development.software.model.Player;
 import it.ts.units.development.software.service.GameLogic;
+import it.ts.units.development.software.service.RenjuVariantLogic;
+import it.ts.units.development.software.service.SimpleGomokuLogic;
 import it.ts.units.development.software.view.ConsoleView;
 
 import java.util.Scanner;
@@ -16,11 +18,34 @@ public class GameController {
     public GameController() {
         this.view = new ConsoleView();
         this.scanner = new Scanner(System.in);
-        int boardSize= init();
+        int boardSize = init();
         Player player1 = createPlayer('X');
         Player player2 = createPlayer('O');
 
-        this.gameLogic = new GameLogic(player1, player2, boardSize);
+        this.gameLogic = getGameLogic(boardSize, player1, player2);
+    }
+
+    private GameLogic getGameLogic(int boardSize, Player player1, Player player2) {
+        while (true) {
+            view.printGameChoice();
+            String choice = scanner.nextLine().toUpperCase();
+            if (choice.equals("G")) {
+                view.printGomokuWelcomeGame();
+                return new SimpleGomokuLogic(player1, player2, boardSize);
+            } else if (choice.equals("R")) {
+                view.printRenjuGomokuWelcomeGame();
+                String helpOrStart = scanner.nextLine().toUpperCase();
+                if (helpOrStart.equals("H")) {
+                    view.printHelpRenju();
+                    return new RenjuVariantLogic(player1, player2, boardSize);
+                } else if (helpOrStart.equals("S")) {
+                    return new RenjuVariantLogic(player1, player2, boardSize);
+                }
+                else view.printInputError();
+            } else {
+                view.printInputError();
+            }
+        }
     }
 
     private Player createPlayer(char symbol) {
@@ -69,6 +94,7 @@ public class GameController {
             }
         }
     }
+
     private int init() {
         while (true) {
             view.printWelcomeMessage();
