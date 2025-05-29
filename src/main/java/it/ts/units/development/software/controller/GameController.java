@@ -1,5 +1,8 @@
 package it.ts.units.development.software.controller;
 
+import it.ts.units.development.software.exception.IllegalDoubleFourException;
+import it.ts.units.development.software.exception.IllegalDoubleThreeException;
+import it.ts.units.development.software.exception.IllegalOverlineException;
 import it.ts.units.development.software.model.Move;
 import it.ts.units.development.software.model.Player;
 import it.ts.units.development.software.service.GameLogic;
@@ -12,12 +15,25 @@ import java.util.Scanner;
 public class GameController {
     private final Scanner scanner;
     private final ConsoleView view;
-    private final GameLogic gameLogic;
+    private GameLogic gameLogic;
 
-    public GameController(Scanner scanner,ConsoleView view) {
+    public GameController(Scanner scanner, ConsoleView view) {
         this.view = view;
         this.scanner = scanner;
-        int boardSize = init();
+    }
+
+    private void initializeGame() {
+        int result;
+        while (true) {
+            view.printWelcomeMessage();
+            int boardSize1 = Integer.parseInt(scanner.nextLine());
+            if (boardSize1 == 15 || boardSize1 == 19) {
+                result = boardSize1;
+                break;
+            } else view.printInputError();
+        }
+        int boardSize = result;
+
         Player player1 = createPlayer('X');
         Player player2 = createPlayer('O');
 
@@ -39,8 +55,7 @@ public class GameController {
                     return new RenjuVariantLogic(player1, player2, boardSize);
                 } else if (helpOrStart.equals("S")) {
                     return new RenjuVariantLogic(player1, player2, boardSize);
-                }
-                else view.printInputError();
+                } else view.printInputError();
             } else {
                 view.printInputError();
             }
@@ -54,6 +69,7 @@ public class GameController {
     }
 
     public void startGame() {
+        initializeGame();
         view.printWelcomeMessage();
         while (!gameLogic.isGameOver()) {
             playTurn();
@@ -77,6 +93,12 @@ public class GameController {
             }
         } catch (IndexOutOfBoundsException e) {
             view.printInvalidMove();
+        } catch (IllegalDoubleThreeException e){
+            view.printDoubleThree();
+        }catch (IllegalDoubleFourException e){
+            view.printDoubleFour();
+        }catch (IllegalOverlineException e){
+            view.printOverlineError();
         }
     }
 
@@ -94,14 +116,4 @@ public class GameController {
         }
     }
 
-    private int init() {
-        while (true) {
-            view.printWelcomeMessage();
-            int boardSize = Integer.parseInt(scanner.nextLine());
-            if (boardSize== 15 || boardSize==19) {
-                return boardSize;
-            }
-            else view.printInputError();
-        }
-    }
 }

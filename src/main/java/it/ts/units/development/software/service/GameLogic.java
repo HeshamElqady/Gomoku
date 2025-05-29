@@ -10,7 +10,6 @@ public abstract class GameLogic {
     private final Player player2;
     private Player currentPlayer;
     private boolean gameOver = false;
-
     private boolean draw = false;
 
     public GameLogic(Player player1, Player player2, int boardSize) {
@@ -60,9 +59,16 @@ public abstract class GameLogic {
             return true;
         }
 
-        if (isForbiddenMove(move)) {
+        try {
+            if (isForbiddenMove(move)) {
+                gameOver = true;
+            }
+        } catch (Exception e) {
             gameOver = true;
+            switchTurn();
+            throw e;
         }
+
         switchTurn();
         return true;
     }
@@ -71,23 +77,18 @@ public abstract class GameLogic {
         currentPlayer = (currentPlayer == player1) ? player2 : player1;
     }
 
-    private boolean checkWin(int row, int col, char symbol) {
-        return checkDirection(row, col, symbol, 1, 0)   // Vertical
-                || checkDirection(row, col, symbol, 0, 1)   // Horizontal
-                || checkDirection(row, col, symbol, 1, 1)   // Diagonal \
-                || checkDirection(row, col, symbol, 1, -1); // Diagonal /
-    }
+    public abstract boolean checkWin(int row, int col, char symbol);
 
-    private boolean checkDirection(int row, int col, char symbol, int dRow, int dCol) {
+    protected int countOccurrences(int row, int col, char symbol, int dRow, int dCol) {
         int count = 1;
 
         count += countDirection(row, col, symbol, dRow, dCol);
         count += countDirection(row, col, symbol, -dRow, -dCol);
 
-        return count >= 5;
+        return count;
     }
 
-    protected int countDirection(int row, int col, char symbol, int dRow, int dCol) {
+    private int countDirection(int row, int col, char symbol, int dRow, int dCol) {
         int count = 0;
         int size = board.getSize();
 

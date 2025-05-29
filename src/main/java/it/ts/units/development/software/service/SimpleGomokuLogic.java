@@ -9,6 +9,14 @@ public class SimpleGomokuLogic extends GameLogic{
     }
 
     @Override
+    public boolean checkWin(int row, int col, char symbol) {
+            return countOccurrences(row, col, symbol, 1, 0) >= 5  // Vertical
+                    || countOccurrences(row, col, symbol, 0, 1) >= 5   // Horizontal
+                    || countOccurrences(row, col, symbol, 1, 1) >= 5 // Diagonal \
+                    || countOccurrences(row, col, symbol, 1, -1) >= 5; // Diagonal /
+    }
+
+    @Override
     public boolean isForbiddenMove(Move move) {
         return false;
     }

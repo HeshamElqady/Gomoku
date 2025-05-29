@@ -7,9 +7,9 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class GameLogicTest {
+public class SimpleGomokuLogicTest {
 
-    private GameLogic gameLogic;
+    private SimpleGomokuLogic gameLogic;
     private Player player1;
     private Player player2;
 
@@ -17,12 +17,7 @@ public class GameLogicTest {
     public void setUp() {
         player1 = new Player("Alice", 'X');
         player2 = new Player("Bob", 'O');
-        gameLogic = new GameLogic(player1, player2, 15) {
-            @Override
-            public boolean isForbiddenMove(Move move) {
-                return false;
-            }
-        };
+        gameLogic = new SimpleGomokuLogic(player1, player2, 15);
     }
 
     @Test

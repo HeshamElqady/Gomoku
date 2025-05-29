@@ -73,4 +73,15 @@ public class ConsoleView {
         System.out.println(Constants.INITIALIZE_RENJU_GOMOKU_GAME);
     }
 
+    public void printDoubleThree() {
+        System.out.println(Constants.ERROR_DOUBLE_THREE);
+    }
+
+    public void printDoubleFour() {
+        System.out.println(Constants.ERROR_DOUBLE_FOUR);
+    }
+
+    public void printOverlineError() {
+        System.out.println(Constants.ERROR_OVER_LINE);
+    }
 }

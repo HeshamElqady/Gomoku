@@ -1,11 +1,14 @@
 package it.ts.units.development.software.service;
 
+import it.ts.units.development.software.exception.IllegalDoubleFourException;
+import it.ts.units.development.software.exception.IllegalDoubleThreeException;
+import it.ts.units.development.software.exception.IllegalOverlineException;
 import it.ts.units.development.software.model.Move;
 import it.ts.units.development.software.model.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class RenjuVariantLogicTest {
     private Player player1;
@@ -30,8 +33,7 @@ class RenjuVariantLogicTest {
         assertTrue(renju.makeMove(new Move(5, 2))); // P1
         assertTrue(renju.makeMove(new Move(9, 9))); // P2
         Move forbiddenMove = new Move(7, 2);
-        assertTrue(renju.isForbiddenMove(forbiddenMove));
-        assertTrue(renju.makeMove(forbiddenMove)); // P1
+        assertThrows(IllegalDoubleThreeException.class, () -> renju.makeMove(forbiddenMove)); // P1
         assertTrue(renju.isGameOver());
     }
 
@@ -50,8 +52,7 @@ class RenjuVariantLogicTest {
         assertTrue(renju.makeMove(new Move(4, 3))); // P1
         assertTrue(renju.makeMove(new Move(11, 9))); // P2
         Move forbiddenMove = new Move(7, 3);
-        assertTrue(renju.isForbiddenMove(forbiddenMove));
-        assertTrue(renju.makeMove(forbiddenMove)); // P1
+        assertThrows(IllegalDoubleFourException.class, () -> renju.makeMove(forbiddenMove)); // P1
         assertTrue(renju.isGameOver());
     }
 
@@ -71,9 +72,54 @@ class RenjuVariantLogicTest {
         assertTrue(renju.makeMove(new Move(7, 5))); // P1
         assertTrue(renju.makeMove(new Move(11, 9))); // P2
         Move forbiddenMove = new Move(7, 3);
-        assertTrue(renju.isForbiddenMove(forbiddenMove));
-        assertTrue(renju.makeMove(forbiddenMove)); // P1
+        assertThrows(IllegalOverlineException.class, () -> renju.makeMove(forbiddenMove)); // P1
         assertTrue(renju.isGameOver());
 
+    }
+
+    @Test
+    public void testMakeValidMove() {
+        Move move = new Move(7, 7);
+        assertTrue(renju.makeMove(move));
+        assertEquals('X', renju.getBoard().getCell(7, 7));
+    }
+
+    @Test
+    public void testMakeMoveInOccupiedCell() {
+        Move move = new Move(5, 5);
+        assertTrue(renju.makeMove(move)); // Player 1
+        assertFalse(renju.makeMove(move)); // Player 2
+    }
+
+    @Test
+    public void testWinConditionHorizontal() {
+        for (int i = 0; i < 5; i++) {
+            assertTrue(renju.makeMove(new Move(7, i))); // P1
+            if (i < 4) {
+                assertTrue(renju.makeMove(new Move(8, i))); // P2
+            }
+        }
+        assertTrue(renju.isGameOver());
+    }
+
+    @Test
+    public void testSwitchTurn() {
+        assertEquals(player1, renju.getCurrentPlayer());
+        renju.makeMove(new Move(0, 0));
+        assertEquals(player2, renju.getCurrentPlayer());
+    }
+
+    @Test
+    public void testGameEndsAfterWin() {
+        for (int i = 0; i < 5; i++) {
+            renju.makeMove(new Move(i, i));  // P1
+            if (i < 4) {
+                renju.makeMove(new Move(i, i + 1)); // P2
+            }
+        }
+        assertTrue(renju.isGameOver());
+
+        // Try making another move
+        assertFalse(renju.makeMove(new Move(0, 14)));
     }
 }
