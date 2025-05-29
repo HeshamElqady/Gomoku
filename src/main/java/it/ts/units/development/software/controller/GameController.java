@@ -13,10 +13,10 @@ public class GameController {
     private final ConsoleView view;
     private final Scanner scanner;
 
-    public GameController(int boardSize) {
+    public GameController() {
         this.view = new ConsoleView();
         this.scanner = new Scanner(System.in);
-
+        int boardSize= init();
         Player player1 = createPlayer('X');
         Player player2 = createPlayer('O');
 
@@ -67,6 +67,16 @@ public class GameController {
                 scanner.nextLine(); // Clear invalid input
                 view.printInputError();
             }
+        }
+    }
+    private int init() {
+        while (true) {
+            view.printWelcomeMessage();
+            int boardSize = Integer.parseInt(scanner.nextLine());
+            if (boardSize== 15 || boardSize==19) {
+                return boardSize;
+            }
+            else view.printInputError();
         }
     }
 }

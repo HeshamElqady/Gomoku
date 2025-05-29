@@ -2,8 +2,9 @@ package it.ts.units.development.software.util;
 
 public class Constants {
     public static final String WELCOME_TO_THE_GAME = "WELCOME TO THE GAME, INSERT G FOR NORMAL GOMOKU AND R FOR RENJU GOMOKU";
-    public static final String INITIALIZE_GOMOKU_GAME = "WELCOME TO GOMOKU\nRULES ARE SIMPLE, FIRST TO CONNECT 5 OR MORE PEICES WINS\nPLEASE SELECT ONE OF THESE BOARD SIZES (15,19)";
-    public static final String INITIALIZE_RENJU_GOMOKU_GAME = "WELCOME TO RENJU GOMOKU\nSPECIAL RULES:\n\tBOARD IS 15X15 \n\tBLACK CAN'T PLACE AN OVERLINE\n\tBLACK CAN'T PLAY A DOUBLE 3 OR A DOUBLE 4\n FOR MORE HELP INSERT H, TO START THE GAME INSERT S";
+    public static final String INITIALIZE_GAME = "WELCOME TO THE GAME, PLEASE SELECT ONE OF THESE BOARD SIZES (15,19)";
+    public static final String INITIALIZE_GOMOKU_GAME = "WELCOME TO GOMOKU\nRULES ARE SIMPLE, FIRST TO CONNECT 5 OR MORE PEICES WINS";
+    public static final String INITIALIZE_RENJU_GOMOKU_GAME = "WELCOME TO RENJU GOMOKU\nSPECIAL RULES:\n\tBLACK CAN'T PLACE AN OVERLINE\n\tBLACK CAN'T PLAY A DOUBLE 3 OR A DOUBLE 4\n FOR MORE HELP INSERT H, TO START THE GAME INSERT S";
     public static final String HELP_RENJU_GOMOKU_GAME = "BLACK CAN'T PLACE A MOVE IN AN INTERSECTION THAT CONNECTS DOUBLE THREE OR DOUBLE FOUR AS A RESULT EX: X X _\n" +
                                                         "                                                                                                          X\n" +
                                                         "                                                                                                          X ";

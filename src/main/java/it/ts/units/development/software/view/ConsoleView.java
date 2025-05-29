@@ -6,7 +6,7 @@ import it.ts.units.development.software.util.Constants;
 
 public class ConsoleView {
     public void printWelcomeMessage() {
-        System.out.println(Constants.INITIALIZE_GOMOKU_GAME);
+        System.out.println(Constants.INITIALIZE_GAME);
     }
 
     public void displayBoard(Board board) {
