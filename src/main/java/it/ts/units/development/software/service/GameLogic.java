@@ -73,9 +73,9 @@ public abstract class GameLogic {
 
     private boolean checkWin(int row, int col, char symbol) {
         return checkDirection(row, col, symbol, 1, 0)   // Vertical
-               || checkDirection(row, col, symbol, 0, 1)   // Horizontal
-               || checkDirection(row, col, symbol, 1, 1)   // Diagonal \
-               || checkDirection(row, col, symbol, 1, -1); // Diagonal /
+                || checkDirection(row, col, symbol, 0, 1)   // Horizontal
+                || checkDirection(row, col, symbol, 1, 1)   // Diagonal \
+                || checkDirection(row, col, symbol, 1, -1); // Diagonal /
     }
 
     private boolean checkDirection(int row, int col, char symbol, int dRow, int dCol) {
@@ -87,7 +87,7 @@ public abstract class GameLogic {
         return count >= 5;
     }
 
-    private int countDirection(int row, int col, char symbol, int dRow, int dCol) {
+    protected int countDirection(int row, int col, char symbol, int dRow, int dCol) {
         int count = 0;
         int size = board.getSize();
 
@@ -114,5 +114,6 @@ public abstract class GameLogic {
         }
         return true;
     }
+
     public abstract boolean isForbiddenMove(Move move);
 }

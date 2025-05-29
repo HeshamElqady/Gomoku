@@ -10,14 +10,13 @@ import it.ts.units.development.software.view.ConsoleView;
 import java.util.Scanner;
 
 public class GameController {
-
-    private final GameLogic gameLogic;
-    private final ConsoleView view;
     private final Scanner scanner;
+    private final ConsoleView view;
+    private final GameLogic gameLogic;
 
-    public GameController() {
-        this.view = new ConsoleView();
-        this.scanner = new Scanner(System.in);
+    public GameController(Scanner scanner,ConsoleView view) {
+        this.view = view;
+        this.scanner = scanner;
         int boardSize = init();
         Player player1 = createPlayer('X');
         Player player2 = createPlayer('O');
@@ -48,7 +47,7 @@ public class GameController {
         }
     }
 
-    private Player createPlayer(char symbol) {
+    public Player createPlayer(char symbol) {
         view.printPlayerNamePrompt(symbol);
         String name = scanner.nextLine().trim();
         return new Player(name.isEmpty() ? "Player " + symbol : name, symbol);
