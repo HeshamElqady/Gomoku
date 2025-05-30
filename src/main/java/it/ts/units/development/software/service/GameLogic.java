@@ -79,26 +79,20 @@ public abstract class GameLogic {
 
     public abstract boolean checkWin(int row, int col, char symbol);
 
-    protected int countOccurrences(int row, int col, char symbol, int dRow, int dCol) {
-        int count = 1;
-
-        count += countDirection(row, col, symbol, dRow, dCol);
-        count += countDirection(row, col, symbol, -dRow, -dCol);
-
-        return count;
-    }
-
-    private int countDirection(int row, int col, char symbol, int dRow, int dCol) {
-        int count = 0;
+    protected int countOccurrences(int row, int col, char symbol, int dRow, int dCol) { //  // returns how many times a piece with the same symbol occurs in a direction in both verses
+        int count = 1; // start from 1 for the initial piece
         int size = board.getSize();
 
-        int r = row + dRow;
-        int c = col + dCol;
+        // Check both directions
+        for (int dir = -1; dir <= 1; dir += 2) { // -1 and +1
+            int r = row + dir * dRow;
+            int c = col + dir * dCol;
 
-        while (r >= 0 && r < size && c >= 0 && c < size && board.getCell(r, c) == symbol) {
-            count++;
-            r += dRow;
-            c += dCol;
+            while (r >= 0 && r < size && c >= 0 && c < size && board.getCell(r, c) == symbol) {
+                count++;
+                r += dir * dRow;
+                c += dir * dCol;
+            }
         }
 
         return count;

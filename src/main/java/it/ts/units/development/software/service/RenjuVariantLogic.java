@@ -8,8 +8,6 @@ import it.ts.units.development.software.model.Player;
 
 public class RenjuVariantLogic extends GameLogic {
 
-    private int threes;
-    private int fours;
     private int verticalOcc;
     private int horizontalOcc;
     private int diagonalOcc;
@@ -40,46 +38,27 @@ public class RenjuVariantLogic extends GameLogic {
 
     @Override
     public boolean isForbiddenMove(Move move) {
-        threes = 0;
-        fours = 0;
+        int threes = 0;
+        int fours = 0;
 
         if (getCurrentPlayer().getSymbol() != 'X') {
             return false;
         }
 
-        if (verticalOcc == 3) {
-            threes++;
-        } else if (verticalOcc == 4) {
-            fours++;
-        } else if (verticalOcc > 5) {
-            throw new IllegalOverlineException();
-        }
+        int[] occurrences = { verticalOcc, horizontalOcc, diagonalOcc, inverseDiagonalOcc };
 
-
-        if (horizontalOcc == 3) {
-            threes++;
-        } else if (horizontalOcc == 4) {
-            fours++;
-        } else if (horizontalOcc > 5) {
-            throw new IllegalOverlineException();
-        }
-
-
-        if (diagonalOcc == 3) {
-            threes++;
-        } else if (diagonalOcc == 4) {
-            fours++;
-        } else if (diagonalOcc > 5) {
-            throw new IllegalOverlineException();
-        }
-
-
-        if (inverseDiagonalOcc == 3) {
-            threes++;
-        } else if (inverseDiagonalOcc == 4) {
-            fours++;
-        } else if (inverseDiagonalOcc > 5) {
-            throw new IllegalOverlineException();
+        for (int occ : occurrences) {
+            switch (occ) {
+                case 3:
+                    threes++;
+                    break;
+                case 4:
+                    fours++;
+                    break;
+                default:
+                    if (occ > 5) { throw new IllegalOverlineException(); }
+                    break;
+            }
         }
         if (threes >= 2) {
             throw new IllegalDoubleThreeException();
