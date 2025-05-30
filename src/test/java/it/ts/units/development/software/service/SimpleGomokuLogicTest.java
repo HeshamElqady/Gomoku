@@ -46,6 +46,39 @@ public class SimpleGomokuLogicTest {
     }
 
     @Test
+    public void testWinConditionVertical() {
+        for (int i = 0; i < 5; i++) {
+            assertTrue(gameLogic.makeMove(new Move(i, 7))); // P1
+            if (i < 4) {
+                assertTrue(gameLogic.makeMove(new Move(i, 8))); // P2
+            }
+        }
+        assertTrue(gameLogic.isGameOver());
+    }
+
+    @Test
+    public void testWinConditionDiagonal() {
+        for (int i = 0; i < 5; i++) {
+            assertTrue(gameLogic.makeMove(new Move(7 + i, 7 + i))); // P1
+            if (i < 4) {
+                assertTrue(gameLogic.makeMove(new Move(0, i))); // P2
+            }
+        }
+        assertTrue(gameLogic.isGameOver());
+    }
+
+    @Test
+    public void testWinConditionInverseDiagonal() {
+        for (int i = 0; i < 5; i++) {
+            assertTrue(gameLogic.makeMove(new Move(7 - i, 7 + i))); // P1
+            if (i < 4) {
+                assertTrue(gameLogic.makeMove(new Move(0, i))); // P2
+            }
+        }
+        assertTrue(gameLogic.isGameOver());
+    }
+
+    @Test
     public void testSwitchTurn() {
         assertEquals(player1, gameLogic.getCurrentPlayer());
         gameLogic.makeMove(new Move(0, 0));
