@@ -1,5 +1,6 @@
 package it.ts.units.development.software.controller;
 
+import it.ts.units.development.software.model.Move;
 import it.ts.units.development.software.model.Player;
 import it.ts.units.development.software.view.ConsoleView;
 import org.junit.jupiter.api.Assertions;
@@ -9,6 +10,9 @@ import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Scanner;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 /**
  * <b>N.B: This test was made after development because we didn't predict how game control could have been from the beginning </b>*/
 @ExtendWith(MockitoExtension.class)
@@ -24,7 +28,7 @@ class GameControllerTest {
     private GameController gameController;
 
     @Test
-    void testGiveBadGameChoice(){
+    void testGiveBadGameChoice() throws InterruptedException {
         Mockito.when(scannerMock.nextLine()).thenReturn("F").thenReturn("15").thenReturn("p1").thenReturn("p2").thenReturn("G");
         Mockito.when(scannerMock.nextInt()).thenReturn(0).thenReturn(0).thenReturn(13).thenReturn(13).thenReturn(0).thenReturn(1).thenReturn(12).thenReturn(0).thenReturn(0).thenReturn(2).thenReturn(12).thenReturn(3).thenReturn(0).thenReturn(3).thenReturn(10).thenReturn(1).thenReturn(0).thenReturn(4);
         gameController.startGame();
@@ -32,7 +36,7 @@ class GameControllerTest {
     }
 
     @Test
-    void testGiveBadRenjuStart(){
+    void testGiveBadRenjuStart() throws InterruptedException {
         Mockito.when(scannerMock.nextLine()).thenReturn("15").thenReturn("p1").thenReturn("p2").thenReturn("R").thenReturn("t").thenReturn("R").thenReturn("s");
         Mockito.when(scannerMock.nextInt()).thenReturn(0).thenReturn(0).thenReturn(13).thenReturn(13).thenReturn(0).thenReturn(1).thenReturn(12).thenReturn(0).thenReturn(0).thenReturn(2).thenReturn(12).thenReturn(3).thenReturn(0).thenReturn(3).thenReturn(10).thenReturn(1).thenReturn(0).thenReturn(4);
         gameController.startGame();
@@ -40,7 +44,7 @@ class GameControllerTest {
     }
 
     @Test
-    void testGiveBadBoardSize(){
+    void testGiveBadBoardSize() throws InterruptedException {
         Mockito.when(scannerMock.nextLine()).thenReturn("13").thenReturn("15").thenReturn("p1").thenReturn("p2").thenReturn("R").thenReturn("s");
         Mockito.when(scannerMock.nextInt()).thenReturn(0).thenReturn(0).thenReturn(13).thenReturn(13).thenReturn(0).thenReturn(1).thenReturn(12).thenReturn(0).thenReturn(0).thenReturn(2).thenReturn(12).thenReturn(3).thenReturn(0).thenReturn(3).thenReturn(10).thenReturn(1).thenReturn(0).thenReturn(4);
         gameController.startGame();
@@ -48,7 +52,7 @@ class GameControllerTest {
     }
 
     @Test
-    void testPlaceMoveInOccupiedCell(){
+    void testPlaceMoveInOccupiedCell() throws InterruptedException {
         Mockito.when(scannerMock.nextLine()).thenReturn("15").thenReturn("p1").thenReturn("p2").thenReturn("R").thenReturn("s");
         Mockito.when(scannerMock.nextInt()).thenReturn(0).thenReturn(0).thenReturn(13).thenReturn(13).thenReturn(0).thenReturn(1).thenReturn(0).thenReturn(1).thenReturn(12).thenReturn(0).thenReturn(0).thenReturn(2).thenReturn(12).thenReturn(3).thenReturn(0).thenReturn(3).thenReturn(10).thenReturn(1).thenReturn(0).thenReturn(4);
         gameController.startGame();
@@ -56,7 +60,7 @@ class GameControllerTest {
     }
 
     @Test
-    void testPlaceMoveOutOfBorders(){
+    void testPlaceMoveOutOfBorders() throws InterruptedException {
         Mockito.when(scannerMock.nextLine()).thenReturn("15").thenReturn("p1").thenReturn("p2").thenReturn("R").thenReturn("s");
         Mockito.when(scannerMock.nextInt()).thenReturn(0).thenReturn(0).thenReturn(13).thenReturn(13).thenReturn(0).thenReturn(15).thenReturn(0).thenReturn(1).thenReturn(12).thenReturn(0).thenReturn(0).thenReturn(2).thenReturn(12).thenReturn(3).thenReturn(0).thenReturn(3).thenReturn(10).thenReturn(1).thenReturn(0).thenReturn(4);
         gameController.startGame();
@@ -64,7 +68,7 @@ class GameControllerTest {
     }
 
     @Test
-    void testNormalGamePlayThroughBlackWins(){
+    void testNormalGamePlayThroughBlackWins() throws InterruptedException {
         Mockito.when(scannerMock.nextLine()).thenReturn("15").thenReturn("p1").thenReturn("p2").thenReturn("G");
         Mockito.when(scannerMock.nextInt()).thenReturn(0).thenReturn(0).thenReturn(13).thenReturn(13).thenReturn(0).thenReturn(1).thenReturn(12).thenReturn(0).thenReturn(0).thenReturn(2).thenReturn(12).thenReturn(3).thenReturn(0).thenReturn(3).thenReturn(10).thenReturn(1).thenReturn(0).thenReturn(4);
         gameController.startGame();
@@ -84,7 +88,7 @@ class GameControllerTest {
     }
 
     @Test
-    void testNormalGamePlayThroughWhiteWins(){
+    void testNormalGamePlayThroughWhiteWins() throws InterruptedException {
         Mockito.when(scannerMock.nextLine()).thenReturn("15").thenReturn("p1").thenReturn("p2").thenReturn("G");
         Mockito.when(scannerMock.nextInt()).thenReturn(9).thenReturn(9).thenReturn(0).thenReturn(0).thenReturn(13).thenReturn(13).thenReturn(0).thenReturn(1).thenReturn(12).thenReturn(0).thenReturn(0).thenReturn(2).thenReturn(12).thenReturn(3).thenReturn(0).thenReturn(3).thenReturn(10).thenReturn(1).thenReturn(0).thenReturn(4);
         gameController.startGame();
@@ -104,7 +108,7 @@ class GameControllerTest {
     }
 
     @Test
-    void testRenjuGamePlayThroughBlackWinsWithNoInvalidMoves(){
+    void testRenjuGamePlayThroughBlackWinsWithNoInvalidMoves() throws InterruptedException {
         Mockito.when(scannerMock.nextLine()).thenReturn("15").thenReturn("p1").thenReturn("p2").thenReturn("R").thenReturn("H").thenReturn("S");
         Mockito.when(scannerMock.nextInt()).thenReturn(0).thenReturn(0).thenReturn(13).thenReturn(13).thenReturn(0).thenReturn(1).thenReturn(12).thenReturn(0).thenReturn(0).thenReturn(2).thenReturn(12).thenReturn(3).thenReturn(0).thenReturn(3).thenReturn(10).thenReturn(1).thenReturn(0).thenReturn(4);
         gameController.startGame();
@@ -125,7 +129,7 @@ class GameControllerTest {
     }
 
     @Test
-    void testRenjuGamePlayThroughBlackLosesWithOverLine(){
+    void testRenjuGamePlayThroughBlackLosesWithOverLine() throws InterruptedException {
         Mockito.when(scannerMock.nextLine()).thenReturn("15").thenReturn("p1").thenReturn("p2").thenReturn("R").thenReturn("H").thenReturn("S");
         Mockito.when(scannerMock.nextInt()).thenReturn(0).thenReturn(0).thenReturn(13).thenReturn(13).thenReturn(0).thenReturn(1).thenReturn(12).thenReturn(0).thenReturn(0).thenReturn(2).thenReturn(12).thenReturn(3).thenReturn(0).thenReturn(3).thenReturn(10).thenReturn(1).thenReturn(0).thenReturn(5).thenReturn(9).thenReturn(9).thenReturn(0).thenReturn(4);
         gameController.startGame();
@@ -147,7 +151,7 @@ class GameControllerTest {
     }
 
     @Test
-    void testRenjuGamePlayThroughBlackLosesWithDoubleThree(){
+    void testRenjuGamePlayThroughBlackLosesWithDoubleThree() throws InterruptedException {
         Mockito.when(scannerMock.nextLine()).thenReturn("15").thenReturn("p1").thenReturn("p2").thenReturn("R").thenReturn("H").thenReturn("S");
         Mockito.when(scannerMock.nextInt()).thenReturn(0).thenReturn(0).thenReturn(13).thenReturn(13).thenReturn(0).thenReturn(1).thenReturn(12).thenReturn(0).thenReturn(1).thenReturn(2).thenReturn(12).thenReturn(1).thenReturn(2).thenReturn(2).thenReturn(10).thenReturn(1).thenReturn(0).thenReturn(2);
         gameController.startGame();
@@ -168,7 +172,7 @@ class GameControllerTest {
         Assertions.assertEquals('O', winner.getSymbol());
     }
     @Test
-    void testRenjuGamePlayThroughBlackLosesWithDoubleFour(){
+    void testRenjuGamePlayThroughBlackLosesWithDoubleFour() throws InterruptedException {
         Mockito.when(scannerMock.nextLine()).thenReturn("15").thenReturn("p1").thenReturn("p2").thenReturn("R").thenReturn("H").thenReturn("S");
         Mockito.when(scannerMock.nextInt()).thenReturn(0).thenReturn(0).thenReturn(13).thenReturn(13).thenReturn(0).thenReturn(1).thenReturn(12).thenReturn(0).thenReturn(0).thenReturn(2).thenReturn(12).thenReturn(1).thenReturn(1).thenReturn(3).thenReturn(10).thenReturn(1).thenReturn(2).thenReturn(3).thenReturn(4).thenReturn(5).thenReturn(3).thenReturn(3).thenReturn(4).thenReturn(6).thenReturn(0).thenReturn(3);
         gameController.startGame();
