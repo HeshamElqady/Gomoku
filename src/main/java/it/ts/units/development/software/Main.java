@@ -6,7 +6,7 @@ import it.ts.units.development.software.view.ConsoleView;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         GameController controller = new GameController(new Scanner(System.in), new ConsoleView());
         controller.startGame();
     }

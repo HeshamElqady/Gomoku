@@ -22,10 +22,11 @@ public class GameController {
         this.scanner = scanner;
     }
 
-    private void initializeGame() {
+    private void initializeGame() throws InterruptedException {
         int result;
         while (true) {
             view.printWelcomeMessage();
+            Thread.sleep(1000);
             int boardSize1 = 0;
             try {
                 boardSize1 = Integer.parseInt(scanner.nextLine());
@@ -39,16 +40,18 @@ public class GameController {
             } else view.printInputError();
         }
         int boardSize = result;
-
+        Thread.sleep(1000);
         Player player1 = createPlayer('X');
+        Thread.sleep(1000);
         Player player2 = createPlayer('O');
 
         this.gameLogic = getGameLogic(boardSize, player1, player2);
     }
 
-    private GameLogic getGameLogic(int boardSize, Player player1, Player player2) {
+    private GameLogic getGameLogic(int boardSize, Player player1, Player player2) throws InterruptedException {
         while (true) {
             view.printGameChoice();
+            Thread.sleep(1000);
             String choice = scanner.nextLine().toUpperCase();
             if (choice.equals("G")) {
                 view.printGomokuWelcomeGame();
@@ -74,12 +77,15 @@ public class GameController {
         return new Player(name.isEmpty() ? "Player " + symbol : name, symbol);
     }
 
-    public void startGame() {
+    public void startGame() throws InterruptedException {
         initializeGame();
+        Thread.sleep(3000);
         while (!gameLogic.isGameOver()) {
             playTurn();
         }
+        Thread.sleep(3000);
         view.displayBoard(gameLogic.getBoard());
+        Thread.sleep(1000);
         if (gameLogic.isDraw()) {
             view.printDraw();
         } else {
@@ -90,9 +96,11 @@ public class GameController {
     private void playTurn() {
         try {
             view.displayBoard(gameLogic.getBoard());
+            Thread.sleep(2000);
             Player currentPlayer = gameLogic.getCurrentPlayer();
             view.promptMove(currentPlayer);
             Move move = getPlayerMove();
+            Thread.sleep(1000);
             if (!gameLogic.makeMove(move)) {
                 view.printOccupiedMove();
             }
@@ -104,6 +112,8 @@ public class GameController {
             view.printDoubleFour();
         }catch (IllegalOverlineException e){
             view.printOverlineError();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
     }
 
