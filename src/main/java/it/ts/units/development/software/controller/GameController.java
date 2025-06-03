@@ -26,7 +26,13 @@ public class GameController {
         int result;
         while (true) {
             view.printWelcomeMessage();
-            int boardSize1 = Integer.parseInt(scanner.nextLine());
+            int boardSize1 = 0;
+            try {
+                boardSize1 = Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                view.printInputError();
+                continue;
+            }
             if (boardSize1 == 15 || boardSize1 == 19) {
                 result = boardSize1;
                 break;
@@ -62,7 +68,7 @@ public class GameController {
         }
     }
 
-    public Player createPlayer(char symbol) {
+    private Player createPlayer(char symbol) {
         view.printPlayerNamePrompt(symbol);
         String name = scanner.nextLine().trim();
         return new Player(name.isEmpty() ? "Player " + symbol : name, symbol);
@@ -70,7 +76,6 @@ public class GameController {
 
     public void startGame() {
         initializeGame();
-        view.printWelcomeMessage();
         while (!gameLogic.isGameOver()) {
             playTurn();
         }

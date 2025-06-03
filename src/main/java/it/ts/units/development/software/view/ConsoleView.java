@@ -42,14 +42,6 @@ public class ConsoleView {
         System.out.println(Constants.PLACE_PIECE);
     }
 
-    public void pintBlackPlayerInsertion() {
-        System.out.println(Constants.PLAYER_X);
-    }
-
-    public void pintWhitePlayerInsertion() {
-        System.out.println(Constants.PLAYER_O);
-    }
-
     public void printPlayerNamePrompt(char symbol) {
         if (symbol == 'X') {
             System.out.println(Constants.PLAYER_X);
